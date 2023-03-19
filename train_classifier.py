@@ -95,7 +95,7 @@ def evaluate_model(model, X_test, Y_test, category_names):
     # model.fit(X_train, y_train)
 
 # Make predictions on the test set
-    predictions = cv.predict(X_test)
+    predictions = model.predict(X_test)
 
 # Calculate the accuracy of the model
     accuracy = grid_search.score(X_test, Y_test)
