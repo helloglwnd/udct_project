@@ -35,7 +35,8 @@ Returns:
 """
 def load_data(database_filepath):
     engine = create_engine(f'sqlite:///{database_filepath}')
-    df = pd.read_sql_table(database_filepath, con=engine)
+    df = pd.read_sql_table('YourTableName', con=engine)
+    df[["related", "aid_related", "infrastructure_related", "weather_related"]] = df[["related", "aid_related", "infrastructure_related", "weather_related"]].astype(np.int64)
     X=df['message']
     Y = df.iloc[:,4:]
     category_colnames=list(df.columns[4:])
