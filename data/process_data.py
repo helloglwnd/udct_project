@@ -37,18 +37,18 @@ def clean_data(df):
     for column in categories:
         if 'related' in column:
             categories[column] = categories[column].str[-1:]
-            # if categories[column].str[-1:] == '2':
-            #     categories[column] = 2
-            # else:
-            #     categories[column] = categories[column].astype(int)
+            if categories[column].any() == '2' or categories[column].any() == 2:
+                categories[column] = 0
+#             else:
+#                 categories[column] = categories[column].astype(int)
         else:
             categories[column] =  categories[column].str[-1:]
             categories[column] = categories[column].astype(int)
+
     df.drop('categories', axis = 1, inplace = True)
     df =pd.concat([df, categories], axis=1)
     df.drop_duplicates(inplace=True)
     return df
-
 
 
 
@@ -63,7 +63,7 @@ def save_data(df, database_filename):
     None
     '''
     engine =  create_engine(f'sqlite:///{database_filename}')
-    df.to_sql('YourTableName', engine, index=False)
+    df.to_sql('YourTableName', engine, index=False, if_exists='replace')
 
 
 def main():
